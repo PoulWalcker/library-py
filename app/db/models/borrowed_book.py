@@ -1,16 +1,19 @@
-from sqlalchemy import Column, Integer, Date, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Integer, Date, ForeignKey
 from app.db.models.base import Base
+from typing import Optional
+from app.db.models.book import Book
+from app.db.models.reader import Reader
 
 
 class BorrowedBook(Base):
     __tablename__ = "borrowed_books"
 
-    id = Column(Integer, primary_key=True, index=True)
-    book_id = Column(Integer, ForeignKey("books.id"), nullable=False)
-    reader_id = Column(Integer, ForeignKey("readers.id"), nullable=False)
-    borrow_date = Column(Date, nullable=False)
-    return_date = Column(Date, nullable=True)
+    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    book_id: Mapped[int] = mapped_column(ForeignKey("books.id"), nullable=False)
+    reader_id: Mapped[int] = mapped_column(ForeignKey("readers.id"), nullable=False)
+    borrow_date: Mapped[Date] = mapped_column(nullable=False)
+    return_date: Mapped[Optional[Date]] = mapped_column(nullable=True)
 
-    book = relationship("Book", backref="borrowed_books")
-    reader = relationship("Reader", backref="borrowed_books")
+    book: Mapped[Book] = relationship(back_populates="borrowed_books")
+    reader: Mapped[Reader] = relationship(back_populates="borrowed_books")
