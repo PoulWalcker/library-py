@@ -6,10 +6,7 @@ from typing import Optional, List
 
 
 def create_reader(db: Session, new_reader: ReaderCreate) -> Reader:
-    reader = Reader(
-        email=new_reader.email,
-        name=new_reader.name
-    )
+    reader = Reader(email=new_reader.email, name=new_reader.name)
 
     db.add(reader)
     db.commit()
@@ -31,9 +28,7 @@ def get_readers(db: Session) -> List[Reader]:
 
 
 def update_reader(
-        db: Session,
-        reader: Reader,
-        reader_update_data: ReaderUpdate
+    db: Session, reader: Reader, reader_update_data: ReaderUpdate
 ) -> Optional[Reader]:
     if reader_update_data.name is not None:
         reader.name = reader_update_data.name
@@ -46,15 +41,10 @@ def update_reader(
     return reader
 
 
-def delete_librarian(
-        db: Session,
-        reader_id: int
-) -> Optional[Reader]:
+def delete_librarian(db: Session, reader_id: int) -> Optional[Reader]:
     reader = get_reader_by_id(db, reader_id)
 
     if reader:
         db.delete(reader)
         db.commit()
         return reader
-
-

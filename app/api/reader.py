@@ -9,21 +9,17 @@ router = APIRouter()
 
 
 @router.post('/register_reader', response_model=ReaderRead)
-def register_reader(
-        new_reader: ReaderCreate,
-        db: Session = Depends(get_db)
-):
+def register_reader(new_reader: ReaderCreate, db: Session = Depends(get_db)):
     existing_reader = db.query(Reader).filter_by(email=new_reader.email).first()
     if existing_reader:
-        raise HTTPException(status_code=400, detail='Reader with this email already registered.')
+        raise HTTPException(
+            status_code=400, detail='Reader with this email already registered.'
+        )
     return create_reader(db, new_reader)
 
 
 @router.get('/readers/{reader_id}', response_model=ReaderRead)
-def get_reader(
-        reader_id: int,
-        db: Session = Depends(get_db)
-):
+def get_reader(reader_id: int, db: Session = Depends(get_db)):
     reader = get_reader_by_id(db, reader_id)
     if not reader:
         raise HTTPException(
@@ -36,11 +32,6 @@ def get_reader(
 
 
 @router.get('/readers', response_model=List[ReaderRead])
-def get_all_readers(
-        db: Session = Depends(get_db)
-):
+def get_all_readers(db: Session = Depends(get_db)):
     readers = get_readers(db)
     return readers
-
-
-

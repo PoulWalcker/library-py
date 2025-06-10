@@ -7,15 +7,12 @@ from typing import Optional
 
 
 def create_librarian(
-        db: Session,
-        new_librarian: LibrarianCreate,
+    db: Session,
+    new_librarian: LibrarianCreate,
 ) -> Librarian:
     hashed_password = hash_password(new_librarian.password)
 
-    librarian = Librarian(
-        email=new_librarian.email,
-        hashed_password=hashed_password
-    )
+    librarian = Librarian(email=new_librarian.email, hashed_password=hashed_password)
 
     db.add(librarian)
     db.commit()
@@ -24,28 +21,20 @@ def create_librarian(
     return librarian
 
 
-def get_librarian_by_id(
-        db: Session,
-        librarian_id: int
-) -> Optional[Librarian]:
+def get_librarian_by_id(db: Session, librarian_id: int) -> Optional[Librarian]:
     stmt = select(Librarian).where(Librarian.id == librarian_id)
     librarian = db.execute(stmt)
     return librarian.scalar_one_or_none()
 
 
-def get_librarian_by_email(
-        db: Session,
-        librarian_email: str
-) -> Optional[Librarian]:
+def get_librarian_by_email(db: Session, librarian_email: str) -> Optional[Librarian]:
     stmt = select(Librarian).where(Librarian.email == librarian_email)
     librarian = db.execute(stmt)
     return librarian.scalar_one_or_none()
 
 
 def update_librarian(
-        db: Session,
-        librarian: Librarian,
-        librarian_update_data: LibrarianUpdate
+    db: Session, librarian: Librarian, librarian_update_data: LibrarianUpdate
 ) -> Optional[Librarian]:
     if librarian_update_data.email is not None:
         librarian.email = librarian_update_data.email
@@ -58,10 +47,7 @@ def update_librarian(
     return librarian
 
 
-def delete_librarian(
-        db: Session,
-        librarian_id: int
-) -> Optional[Librarian]:
+def delete_librarian(db: Session, librarian_id: int) -> Optional[Librarian]:
     librarian = get_librarian_by_id(db, librarian_id)
 
     if librarian:

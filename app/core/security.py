@@ -25,15 +25,14 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 
-def create_access_token(
-        data: dict,
-        expires_delta: Optional[timedelta] = None
-):
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.now(timezone.utc) + expires_delta
     else:
-        expire = datetime.now(timezone.utc) + timedelta(minutes=15)  # ToDo: Increase and move to CONST
+        expire = datetime.now(timezone.utc) + timedelta(
+            minutes=15
+        )  # ToDo: Increase and move to CONST
 
     to_encode.update({'exp': expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)

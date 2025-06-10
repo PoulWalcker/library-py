@@ -19,4 +19,3 @@ class ReaderRead(BaseModel):
 class ReaderUpdate(BaseModel):
     name: Optional[str]
     email: Optional[EmailStr]
-    
