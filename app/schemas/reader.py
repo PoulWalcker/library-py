@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 
 class ReaderCreate(BaseModel):
@@ -13,3 +14,9 @@ class ReaderRead(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ReaderUpdate(BaseModel):
+    name: Optional[str]
+    email: Optional[EmailStr]
+    
