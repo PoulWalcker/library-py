@@ -41,7 +41,7 @@ def update_reader(
     return reader
 
 
-def delete_librarian(db: Session, reader_id: int) -> Optional[Reader]:
+def delete_reader(db: Session, reader_id: int) -> Optional[Reader]:
     reader = get_reader_by_id(db, reader_id)
 
     if reader:

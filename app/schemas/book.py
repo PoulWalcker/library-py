@@ -20,3 +20,11 @@ class BookRead(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class BookUpdate(BaseModel):
+    title: Optional[str] = None
+    author: Optional[str] = None
+    publication_year: Optional[int] = None
+    isbn: Optional[str] = None
+    amount: Optional[int] = None
