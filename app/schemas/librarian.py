@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import Optional
 
 
 class LibrarianCreate(BaseModel):
@@ -12,3 +13,8 @@ class LibrarianRead(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class LibrarianUpdate(BaseModel):
+    email: Optional[EmailStr] = None
+    password: Optional[str] = None
